@@ -1,5 +1,5 @@
-import plugin from "./plugin";
+import plugin from './plugin';
 
 declare var tinymce: any;
 
-tinymce.PluginManager.add("tinymceImagetools", plugin);
+tinymce.PluginManager.add('cks_imagetools', plugin);

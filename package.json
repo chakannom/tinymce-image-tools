@@ -22,6 +22,7 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
+    "@ephox/katamari": "^2.3.3",
     "buffer": "^5.2.1",
     "create-hmac": "^1.1.7",
     "lodash": "^4.17.4"

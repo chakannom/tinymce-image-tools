@@ -5,12 +5,16 @@
   <script>
     tinymce.init({
       selector:'textarea',
-      plugins: 'tinymceImagetools',
-      toolbar: 'tinymceImagetools'
+      plugins: 'image cks_imagetools',
+      toolbar: 'image',
+      height : '200'
     });
   </script>
 </head>
 <body>
-  <textarea>Testing tinymceImagetools.</textarea>
+  <textarea>
+    Testing tinymceImagetools.
+    <img src="https://via.placeholder.com/200x150">
+  </textarea>
 </body>
 </html>
