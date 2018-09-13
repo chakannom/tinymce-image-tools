@@ -37,7 +37,7 @@ const isEditableImage = function (editor, img) {
 
 const resizing = function (editor, limitSize) {
     return function () {
-        let selectedImage = getSelectedImage(editor);
+        const selectedImage = getSelectedImage(editor);
         if (isUseImgproxy(editor, selectedImage)) {
             const src = getOriginalImageUrlFromImgproxyUrl(selectedImage.src);
             selectedImage.src = imgproxy.createImgproxySignatureUrl('fit', limitSize, limitSize, 'ce', 0, src, 'png', getImgproxySettings(editor));
