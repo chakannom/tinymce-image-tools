@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const pluginName = "tinymce-imagetools";
+const pluginName = "cks_imagetools";
 
 module.exports = {
   entry: {
