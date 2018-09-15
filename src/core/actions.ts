@@ -16,7 +16,6 @@ const getImgproxySettings = function (editor) {
 
 const isUseImgproxy = function (editor, img) {
     const imgproxySettings = getImgproxySettings(editor);
-
     if (imgproxySettings.url === undefined || imgproxySettings.key === undefined || imgproxySettings.salt === undefined) {
         return false;
     } else if (img.src.indexOf(imgproxySettings.url) !== 0) {
@@ -31,7 +30,6 @@ const getOriginalImageUrlFromImgproxyUrl = function (src: string) {
 
 const isEditableImage = function (editor, img) {
     const selectorMatched = editor.dom.is(img, 'img:not([data-mce-object],[data-mce-placeholder])');
-
     return selectorMatched;
 };
 
@@ -44,17 +42,9 @@ const resizing = function (editor, limitSize) {
         } else {
             const originalSize = imageSize.getNaturalImageSize(selectedImage);
             const size = {w: originalSize.w, h: originalSize.h};
-            if (limitSize !== 1600) {
-                if (originalSize.w > originalSize.h) {
-                    size.w = limitSize;
-                    size.h = -1;
-                } else if (originalSize.w < originalSize.h) {
-                    size.w = -1;
-                    size.h = limitSize;
-                } else {
-                    size.w = limitSize;
-                    size.h = limitSize;
-                }
+            if (limitSize < 1600) {
+                size.w = (originalSize.w >= originalSize.h ? limitSize : -1);
+                size.h = (originalSize.w <= originalSize.h ? limitSize : -1);
             }
             imageSize.setImageSize(selectedImage, size);
         }
