@@ -1,6 +1,6 @@
 const getParams = function (editor) {
     const params = editor.getParam('cks_image_params', {});
-    return params ? params : undefined
+    return params ? params : undefined;
 }
 
 const getToolbarItems = (editor): string => {
