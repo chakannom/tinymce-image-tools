@@ -10,7 +10,7 @@ By running the `npm start` command you start the development server and open a b
 
 ## The production build
 
-By running the `npm run build` command Webpack will create a `dist` directory with a child directory with the name of your plugin (tinymce-imagetools) containing three files:
+By running the `npm run build` command Webpack will create a `dist` directory with a child directory with the name of your plugin (cks_imagetools) containing three files:
 
 * `plugin.js` - the bundled plugin
 * `plugin.min.js` - the bundles, uglified and minified plugin
