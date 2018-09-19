@@ -1,6 +1,8 @@
-# tinymceImagetools TinyMCE Plugin
+# cks_imagetools TinyMCE Plugin
 
-Welcome stranger! This is a repo containing the tinymceImagetools TinyMCE plugin.
+Welcome stranger! This is a repo containing the cks_imagetools TinyMCE plugin.
+
+* Demo: https://nomsblog.chakans.com/p/tinymce-plugin-demo.html
 
 ## The development server
 
