@@ -2,7 +2,7 @@
 
 Welcome stranger! This is a repo containing the cks_imagetools TinyMCE plugin.
 
-* Demo: https://nomsblog.chakans.com/p/tinymce-plugin-demo.html
+* Demo: https://nomsblog.chakans.com/p/tinymce-plugin-demo.html#cks_imagetools
 
 ## The development server
 
