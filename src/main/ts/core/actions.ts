@@ -40,7 +40,7 @@ const getImgproxySettings = function (editor) {
 
 const isUseImgproxy = function (editor, img) {
     const imgproxySettings = getImgproxySettings(editor);
-    if (imgproxySettings.url === undefined || imgproxySettings.key === undefined || imgproxySettings.salt === undefined) {
+    if (typeof imgproxySettings.url === 'undefined' || typeof imgproxySettings.key === 'undefined' || typeof imgproxySettings.salt === 'undefined') {
         return false;
     } else if (img.src.indexOf(imgproxySettings.url) !== 0) {
         return false;
@@ -49,7 +49,7 @@ const isUseImgproxy = function (editor, img) {
 };
 
 const getOriginalImageUrlFromImgproxyUrl = function (src: string) {
-    return window.atob(src.slice(src.lastIndexOf('/') + 1, src.lastIndexOf('.')));
+    return atob(src.slice(src.lastIndexOf('/') + 1, src.lastIndexOf('.')));
 };
 
 const resizing = function (editor, limitSize) {

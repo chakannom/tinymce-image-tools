@@ -8,15 +8,15 @@ const getToolbarItems = (editor): string => {
 };
 
 const getImgproxyUrl = function (editor) {
-    return getParams(editor)['imgproxy_url'];
+    return getParams(editor).imgproxy_url;
 };
 
 const getImgproxyKey = function (editor) {
-    return getParams(editor)['imgproxy_key'];
+    return getParams(editor).imgproxy_key;
 };
 
 const getImgproxySalt = function (editor) {
-    return getParams(editor)['imgproxy_salt'];
+    return getParams(editor).imgproxy_salt;
 };
 
 export {

@@ -9,6 +9,10 @@
           true,
           "spaces",
           4
+      ],
+      "max-line-length": [
+          true,
+          240
       ]
   },
   "rulesDirectory": []
