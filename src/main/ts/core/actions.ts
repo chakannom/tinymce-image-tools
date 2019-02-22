@@ -1,6 +1,30 @@
+import { Option } from '@ephox/katamari';
+import { SelectorFind, Element } from '@ephox/sugar';
+
 import * as settings from '../api/settings';
 import imgproxy from '../api/imgproxy';
 import imageSize from './image-size';
+
+const getFigureImg = (elem) => {
+  return SelectorFind.child(Element.fromDom(elem), 'img');
+};
+
+const isFigure = (editor, elem) => {
+  return editor.dom.is(elem, 'figure');
+};
+
+const getEditableImage = function (editor, elem) {
+  const isImage = (imgNode) => editor.dom.is(imgNode, 'img:not([data-mce-object],[data-mce-placeholder])');
+  const isEditable = (imgNode) => isImage(imgNode);
+
+  if (isFigure(editor, elem)) {
+      const imgOpt = getFigureImg(elem);
+      return imgOpt.map((img) => {
+          return isEditable(img.dom()) ? Option.some(img.dom()) : Option.none();
+      });
+  }
+  return isEditable(elem) ? Option.some(elem) : Option.none();
+};
 
 const getSelectedImage = function (editor) {
     return editor.selection.getNode();
@@ -12,7 +36,7 @@ const getImgproxySettings = function (editor) {
         key: settings.getImgproxyKey(editor),
         salt: settings.getImgproxySalt(editor)
     };
-}
+};
 
 const isUseImgproxy = function (editor, img) {
     const imgproxySettings = getImgproxySettings(editor);
@@ -22,15 +46,10 @@ const isUseImgproxy = function (editor, img) {
         return false;
     }
     return true;
-}
+};
 
 const getOriginalImageUrlFromImgproxyUrl = function (src: string) {
-    return atob(src.slice(src.lastIndexOf('/') + 1, src.lastIndexOf('.')));
-}
-
-const isEditableImage = function (editor, img) {
-    const selectorMatched = editor.dom.is(img, 'img:not([data-mce-object],[data-mce-placeholder])');
-    return selectorMatched;
+    return window.atob(src.slice(src.lastIndexOf('/') + 1, src.lastIndexOf('.')));
 };
 
 const resizing = function (editor, limitSize) {
@@ -38,7 +57,8 @@ const resizing = function (editor, limitSize) {
         const selectedImage = getSelectedImage(editor);
         if (isUseImgproxy(editor, selectedImage)) {
             const src = getOriginalImageUrlFromImgproxyUrl(selectedImage.src);
-            selectedImage.src = imgproxy.createImgproxySignatureUrl('fit', limitSize, limitSize, 'ce', 0, src, 'png', getImgproxySettings(editor));
+            const enlarge = limitSize < 1600 ? 1 : 0;
+            selectedImage.src = imgproxy.createImgproxySignatureUrl('fit', limitSize, limitSize, 'ce', enlarge, src, 'png', getImgproxySettings(editor));
         } else {
             const originalSize = imageSize.getNaturalImageSize(selectedImage);
             const size = {w: originalSize.w, h: originalSize.h};
@@ -52,6 +72,6 @@ const resizing = function (editor, limitSize) {
 };
 
 export default {
-    isEditableImage,
+    getEditableImage,
     resizing
 };
