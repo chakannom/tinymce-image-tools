@@ -12,10 +12,6 @@
   },
   "keywords": [],
   "author": "chakannom",
-  "dependencies": {
-    "buffer": "^5.2.1",
-    "create-hmac": "^1.1.7"
-  },
   "devDependencies": {
     "@ephox/agar": "latest",
     "@ephox/bedrock": "latest",

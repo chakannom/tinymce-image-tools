@@ -1,8 +1,3 @@
-import * as createHmac from 'create-hmac';
-import { Buffer } from 'buffer';
-
-declare const createHmac: any;
-
 const createImgproxySignatureUrl = function (
   resizingType: string,
   width: number,
