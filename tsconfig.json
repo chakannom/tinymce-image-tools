@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
-    "noImplicitAny": false,
-    "removeComments": true,
     "target": "es5",
     "module": "es2015",
     "importHelpers": true,
@@ -11,8 +9,7 @@
     "noUnusedLocals": true,
     "sourceMap": true,
     "outDir": "lib",
-    "baseUrl": ".",
-    "lib": ["es5", "es6", "dom"]
+    "baseUrl": "."
   },
   "include": [
     "src/demo/ts",

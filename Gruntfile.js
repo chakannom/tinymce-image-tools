@@ -82,11 +82,11 @@ module.exports = function(grunt) {
         },
         // scratchPluginMinPath is used twice on purpose, all outputs will be minified for premium plugins
         files: {
-          'dist/tinymce-image-tools/plugin.js': [
+          'dist/cks_imagetools/plugin.js': [
             'src/text/license-header.js',
             scratchPluginMinPath
           ],
-          'dist/tinymce-image-tools/plugin.min.js': [
+          'dist/cks_imagetools/plugin.min.js': [
             'src/text/license-header.js',
             scratchPluginMinPath
           ]
@@ -100,10 +100,10 @@ module.exports = function(grunt) {
           {
             cwd: 'src/text',
             src: ['license.txt'],
-            dest: 'dist/tinymce-image-tools',
+            dest: 'dist/cks_imagetools',
             expand: true
           },
-          { src: ['changelog.txt'], dest: 'dist/tinymce-image-tools', expand: true }
+          { src: ['changelog.txt'], dest: 'dist/cks_imagetools', expand: true }
         ]
       }
     },
@@ -157,7 +157,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('@ephox/swag');
 
   grunt.registerTask('version', 'Creates a version file', function () {
-    grunt.file.write('dist/tinymce-image-tools/version.txt', BUILD_VERSION);
+    grunt.file.write('dist/cks_imagetools/version.txt', BUILD_VERSION);
   });
 
   grunt.registerTask('default', [

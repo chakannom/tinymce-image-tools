@@ -1,13 +1,13 @@
-import commands from './api/commands';
-import buttons from './ui/buttons';
-import contextToolbar from './ui/context-toolbar';
+import Buttons from './ui/Buttons';
+import Commands from './api/Commands';
+import ContextToolbar from './ui/ContextToolbar';
 
 declare const tinymce: any;
 
 const setup = (editor, url) => {
-    commands.register(editor);
-    buttons.register(editor);
-    contextToolbar.register(editor);
+  Commands.register(editor);
+  Buttons.register(editor);
+  ContextToolbar.register(editor);
 };
 
 tinymce.PluginManager.add('cks_imagetools', setup);

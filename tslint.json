@@ -5,15 +5,7 @@
   ],
   "jsRules": {},
   "rules": {
-      "indent": [
-          true,
-          "spaces",
-          4
-      ],
-      "max-line-length": [
-          true,
-          240
-      ]
+    "one-variable-per-declaration": false
   },
   "rulesDirectory": []
 }
