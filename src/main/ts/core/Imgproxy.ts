@@ -1,18 +1,54 @@
-import Crypto from './Crypto';
+import { btoa, TextEncoder, window } from '@ephox/dom-globals';
+
+const utf8Decode = (utf8Str) => {
+  return new TextEncoder().encode(utf8Str);
+};
+
+const hexDecode = (hexStr) => {
+  const strLen = hexStr.length;
+  if (strLen % 2 !== 0) {
+    throw new TypeError('Invalid hex string');
+  }
+  const length = strLen / 2;
+  const buffer = new Uint8Array(length);
+  for (let i = 0; i < length; ++i) {
+    const parsed = parseInt(hexStr.substr(i * 2, 2), 16);
+    if (isNaN(parsed)) {
+      return buffer;
+    }
+    buffer[i] = parsed;
+  }
+  return buffer;
+};
 
 const urlSafeBase64 = (str) => {
-  return Buffer.from(str).toString('base64').replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+  const base64Str = btoa(String.fromCharCode.apply(null, utf8Decode(str)));
+  return base64Str.replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 };
 
-const hexDecode = (hex) => {
-  return Buffer.from(hex, 'hex');
+const importKey = async (key) => {
+  return await window.crypto.subtle.importKey(
+    'raw', // raw format of the key - should be Uint8Array
+    key,
+    { // algorithm details
+      name: 'HMAC',
+      hash: { name: 'SHA-256' }
+    },
+    false, // export = false
+    ['sign', 'verify'] // what this key can do
+  );
 };
 
-const utf8Decode = (utf8) => {
-  return Buffer.from(utf8, 'utf8');
+const getSignature = async (key, message) => {
+  const cryptoKey = await importKey(key);
+  return await window.crypto.subtle.sign(
+    'HMAC',
+    cryptoKey,
+    message
+  );
 };
 
-const createImgproxySignatureUrl = async function (
+const createImgproxySignatureUrl = async (
   resizingType: string,
   width: number,
   height: number,
@@ -21,11 +57,15 @@ const createImgproxySignatureUrl = async function (
   nonEncodingUrl: string,
   extension: string,
   settings: any
-) {
+) => {
   const encodedUrl = urlSafeBase64(nonEncodingUrl);
   const path = `/${resizingType}/${width}/${height}/${gravity}/${enlarge}/${encodedUrl}.${extension}`;
-  const message = Buffer.concat([hexDecode(settings.salt), utf8Decode(path)]);
-  const signature = await Crypto.getSignature(hexDecode(settings.key), message);
+  const hexArray = hexDecode(settings.salt);
+  const utf8Array = utf8Decode(path);
+  const message = new Uint8Array(hexArray.length + utf8Array.length);
+  message.set(hexArray);
+  message.set(message);
+  const signature = await getSignature(hexDecode(settings.key), message);
   const base64Signature = urlSafeBase64(signature);
 
   return `${settings.url}/${base64Signature}${path}`;

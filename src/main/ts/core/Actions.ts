@@ -79,7 +79,6 @@ const resizing = function (editor, limitSize) {
           .then((imgSrc) => {
             selectedImageElement.src = imgSrc;
           });
-        // selectedImageElement.src = Imgproxy.createImgproxySignatureUrl('fit', limitSize, limitSize, 'ce', enlarge, src, 'png', getImgproxySettings(editor));
       } else {
         const originalSize = ImageSize.getNaturalImageSize(selectedImageElement);
         const size = {w: originalSize.w, h: originalSize.h};
