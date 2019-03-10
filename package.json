@@ -15,8 +15,9 @@
   "devDependencies": {
     "@ephox/agar": "latest",
     "@ephox/bedrock": "latest",
-    "@ephox/mcagar": "latest",
+    "@ephox/dom-globals": "latest",
     "@ephox/katamari": "latest",
+    "@ephox/mcagar": "latest",
     "@ephox/sugar": "latest",
     "@ephox/swag": "latest",
     "@ephox/tslint-rules": "latest",
