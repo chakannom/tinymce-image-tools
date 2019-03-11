@@ -10,15 +10,15 @@ const utf8Decode = function (utf8) {
   return utf8;
 };
 
-const hexDecode = function (hexStr) {
-  const strLen = hexStr.length;
+const hexDecode = function (hex) {
+  const strLen = hex.length;
   if (strLen % 2 !== 0) {
     throw new TypeError('Invalid hex string');
   }
   const length = strLen / 2;
   const buffer = new Uint8Array(length);
   for (let i = 0; i < length; ++i) {
-    const parsed = parseInt(hexStr.substr(i * 2, 2), 16);
+    const parsed = parseInt(hex.substr(i * 2, 2), 16);
     if (isNaN(parsed)) {
       return buffer;
     }
@@ -70,7 +70,7 @@ const createImgproxySignatureUrl = async function (
   const utf8Array = utf8Decode(path);
   const message = new Uint8Array(hexArray.length + utf8Array.length);
   message.set(hexArray);
-  message.set(message);
+  message.set(utf8Array, hexArray.length);
   const signature = await getSignature(hexDecode(settings.key), message);
   const base64Signature = urlSafeBase64(signature);
 
