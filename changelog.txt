@@ -1,2 +1,6 @@
 1.0.0
   * Initial release.
+1.1.0
+  * Added semicon.
+2.0.0
+  * Tinymce 5.0.0 support.
