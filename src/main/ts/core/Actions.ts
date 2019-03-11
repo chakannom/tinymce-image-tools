@@ -6,11 +6,11 @@ import * as Settings from '../api/Settings';
 import Imgproxy from './Imgproxy';
 import ImageSize from './ImageSize';
 
-const getFigureImg = (elem) => {
+const getFigureImg = function (elem) {
   return SelectorFind.child(Element.fromDom(elem), 'img');
 };
 
-const isFigure = (editor, elem) => {
+const isFigure = function (editor, elem) {
   return editor.dom.is(elem, 'figure');
 };
 
@@ -32,7 +32,7 @@ const displayError = function (editor, error) {
   });
 };
 
-const getSelectedImage = (editor): Option<Element> => {
+const getSelectedImage = function (editor) {
   const elem = editor.selection.getNode();
   if (isFigure(editor, elem)) {
     return getFigureImg(elem);
@@ -61,7 +61,7 @@ const isUseImgproxy = function (editor, img) {
   return true;
 };
 
-const getOriginalImageUrlFromImgproxyUrl = (src: string) => {
+const getOriginalImageUrlFromImgproxyUrl = function (src: string) {
     return atob(src.slice(src.lastIndexOf('/') + 1, src.lastIndexOf('.')));
 };
 

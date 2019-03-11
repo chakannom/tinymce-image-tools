@@ -1,10 +1,16 @@
-import { btoa, TextEncoder, window } from '@ephox/dom-globals';
+import { btoa, window, TextEncoder } from '@ephox/dom-globals';
 
-const utf8Decode = (utf8Str) => {
-  return new TextEncoder().encode(utf8Str);
+const utf8Decode = function (utf8) {
+  if (typeof ArrayBuffer !== 'undefined' && utf8 instanceof ArrayBuffer) {
+    return new Uint8Array(utf8);
+  }
+  if (typeof utf8 === 'string') {
+    return new TextEncoder().encode(utf8);
+  }
+  return utf8;
 };
 
-const hexDecode = (hexStr) => {
+const hexDecode = function (hexStr) {
   const strLen = hexStr.length;
   if (strLen % 2 !== 0) {
     throw new TypeError('Invalid hex string');
@@ -21,12 +27,12 @@ const hexDecode = (hexStr) => {
   return buffer;
 };
 
-const urlSafeBase64 = (str) => {
+const urlSafeBase64 = function (str) {
   const base64Str = btoa(String.fromCharCode.apply(null, utf8Decode(str)));
   return base64Str.replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 };
 
-const importKey = async (key) => {
+const importKey = async function (key) {
   return await window.crypto.subtle.importKey(
     'raw', // raw format of the key - should be Uint8Array
     key,
@@ -39,7 +45,7 @@ const importKey = async (key) => {
   );
 };
 
-const getSignature = async (key, message) => {
+const getSignature = async function (key, message) {
   const cryptoKey = await importKey(key);
   return await window.crypto.subtle.sign(
     'HMAC',
@@ -48,7 +54,7 @@ const getSignature = async (key, message) => {
   );
 };
 
-const createImgproxySignatureUrl = async (
+const createImgproxySignatureUrl = async function (
   resizingType: string,
   width: number,
   height: number,
@@ -57,7 +63,7 @@ const createImgproxySignatureUrl = async (
   nonEncodingUrl: string,
   extension: string,
   settings: any
-) => {
+) {
   const encodedUrl = urlSafeBase64(nonEncodingUrl);
   const path = `/${resizingType}/${width}/${height}/${gravity}/${enlarge}/${encodedUrl}.${extension}`;
   const hexArray = hexDecode(settings.salt);
